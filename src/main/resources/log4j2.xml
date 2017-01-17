@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug"  monitorInterval="120">
+  <Appenders>
+    <Console name="CONSOLE" target="SYSTEM_OUT">
+      <!-- PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/-->
+      <PatternLayout>
+			<pattern>%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n</pattern>
+		</PatternLayout>
+    </Console>
+    <!-- File name="TEMP" fileName="log/thermostat.log">
+      <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+    </File-->
+    <RollingFile name="RollingFile" fileName="log/thermostat.log" filePattern="log/thermostat-%d{yyyy-MM-dd}-%i.log" >
+		<PatternLayout>
+			<pattern>%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n</pattern>
+		</PatternLayout>
+		<Policies>
+			<SizeBasedTriggeringPolicy size="10 MB" />
+		</Policies>
+		<DefaultRolloverStrategy max="4"/>
+	</RollingFile>
+    <Async name="ASYNC">
+      <AppenderRef ref="RollingFile"/>
+      <AppenderRef ref="CONSOLE"/>
+    </Async>
+  </Appenders>
+  <Loggers>
+  	<Logger name="net.fortuna.ical4j" level="error">
+      <AppenderRef ref="ASYNC"/>
+    </Logger>
+    <Root level="debug">
+      <AppenderRef ref="ASYNC"/>
+    </Root>
+  </Loggers>
+</Configuration>
